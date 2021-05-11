@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MovieTitles.Repositories;
 
 namespace MovieTitles.Controllers
 {
@@ -17,15 +18,18 @@ namespace MovieTitles.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ITitleRepository _titleRepository;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, ITitleRepository titleRepository)
         {
             _logger = logger;
+            _titleRepository = titleRepository;
         }
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+            var titles = _titleRepository.GetTitlesBySearchText("all");
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

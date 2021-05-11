@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MovieTitles.Repositories;
 
 namespace MovieTitles
 {
@@ -28,6 +30,13 @@ namespace MovieTitles
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            services.AddScoped<ITitleRepository, TitleRepository>();
+
+            services.AddDbContext<ApplicationDbContext>(
+                options => options.UseSqlServer(
+                    Configuration.GetSection("ConnectionStrings").GetValue<string>("TitleDb")));
+            services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
