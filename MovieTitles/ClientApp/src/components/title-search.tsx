@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { ApplicationState } from '../store';
-import * as TitleStore from '../store/TitleSearch';
+import * as TitleStore from '../store/title-search';
 
 // At runtime, Redux will merge together...
 type TitleSearchProps =
