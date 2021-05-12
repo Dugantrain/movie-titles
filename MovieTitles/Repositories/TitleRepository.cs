@@ -10,6 +10,7 @@ namespace MovieTitles.Repositories
     public interface ITitleRepository
     {
         IEnumerable<Title> GetTitlesBySearchText(string searchText);
+        Title GetById(int id);
     }
     public class TitleRepository : ITitleRepository
     {
@@ -24,6 +25,12 @@ namespace MovieTitles.Repositories
         {
             var titles = _applicationDbContext.Title.Where(t => t.TitleName.Contains(searchText));
             return titles;
+        }
+
+        public Title GetById(int id)
+        {
+            var title = _applicationDbContext.Title.SingleOrDefault(t => t.TitleId == id);
+            return title;
         }
     }
 }
