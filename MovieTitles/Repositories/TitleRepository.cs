@@ -23,8 +23,8 @@ namespace MovieTitles.Repositories
 
         public IEnumerable<Title> GetTitlesBySearchText(string searchText)
         {
-            if (string.IsNullOrEmpty(searchText)) return _applicationDbContext.Title;
-            var titles = _applicationDbContext.Title.Where(t => t.TitleName.Contains(searchText));
+            if (string.IsNullOrEmpty(searchText)) return _applicationDbContext.Title.OrderBy(t=> t.TitleNameSortable);
+            var titles = _applicationDbContext.Title.Where(t => t.TitleName.Contains(searchText)).OrderBy(t => t.TitleNameSortable);
             return titles;
         }
 

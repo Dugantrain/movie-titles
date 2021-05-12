@@ -7,7 +7,7 @@ import * as TitleStore from '../store/title-search';
 
 // At runtime, Redux will merge together...
 type TitleSearchProps =
-    TitleStore.TitleState // ... state we've requested from the Redux store
+  TitleStore.TitleState // ... state we've requested from the Redux store
   & typeof TitleStore.actionCreators // ... plus action creators we've requested
   & RouteComponentProps<{ searchText: string }>; // ... plus incoming routing parameters
 
@@ -15,60 +15,51 @@ type TitleSearchProps =
 class TitleSearch extends React.PureComponent<TitleSearchProps> {
 
 
-    // This method is called when the component is first added to the document
-    public componentDidMount() {
-        this.props.requestTitleSearch('');
-    }
+  // This method is called when the component is first added to the document
+  public componentDidMount() {
+    this.props.requestTitleSearch('');
+  }
 
   public render() {
     return (
       <React.Fragment>
         <h1 id="tabelLabel">Titles</h1>
-        <p>Enter text to begin filtering.</p>
-            {this.renderTitlesTable()}
+        {this.renderTitlesTable()}
         {/*{this.renderPagination()}*/}
       </React.Fragment>
     );
   }
 
   private renderTitlesTable() {
-      return (
-          <div>
-              <input type="text"  onKeyUp={(e) => this.props.requestTitleSearch(e.target.value)}/>
-              <table className='table table-striped' aria-labelledby="tabelLabel">
-                  <thead>
-                  <tr>
-                      <th>Id</th>
-                          <th>Title</th>
-                          <th>Released</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  {this.props.titles.map((title: TitleStore.Title) =>
-                      <tr key={title.titleId}>
-                          <td>{title.titleId}</td>
-                          <td>{title.titleName}</td>
-                          <td>{title.releaseYear}</td>
-                      </tr>
-                  )}
-                  </tbody>
-              </table>
+    return (
+      <div>
+        <div className="row mb-2">
+          <input className="col-md-6" type="text" placeholder="Search by title" onKeyUp={(e) => this.props.requestTitleSearch(e.target.value)} />
+        </div>
+        {!this.props.isLoading &&
+          <div className="row">
+            {
+              this.props.titles.map((title: TitleStore.Title) =>
+                <div className="card col-md-4 mb-2">
+                  <div className="card-body">
+                    <h5 className="card-title">{title.titleName} ({title.releaseYear})</h5>
+                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" >Details</a>
+                  </div>
+                </div>
+              )}
           </div>
+        }
+        {this.props.isLoading &&
+          <div className="row justify-content-center">
+            <div className="spinner-border" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
+          </div>
+        }
+      </div>
     );
   }
-
-  //private renderPagination() {
-  //  const prevStartDateIndex = (this.props.startIndex || 0) - 5;
-  //    const nextStartDateIndex = (this.props.startIndex || 0) + 5;
-
-  //  return (
-  //    <div className="d-flex justify-content-between">
-  //      <Link className='btn btn-outline-secondary btn-sm' to={`/fetch-data/${prevStartDateIndex}`}>Previous</Link>
-  //      {this.props.isLoading && <span>Loading...</span>}
-  //      <Link className='btn btn-outline-secondary btn-sm' to={`/fetch-data/${nextStartDateIndex}`}>Next</Link>
-  //    </div>
-  //  );
-  //}
 }
 
 export default connect(
