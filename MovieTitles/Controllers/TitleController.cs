@@ -21,8 +21,8 @@ namespace MovieTitles.Controllers
         }
 
         [HttpGet]
-        [Route("search/{searchText}")]
-        public IEnumerable<Title> Search(string searchText)
+        [Route("search/{searchText?}")]
+        public IEnumerable<Title> Search(string searchText = null)
         {
             return _titleRepository.GetTitlesBySearchText(searchText);
         }

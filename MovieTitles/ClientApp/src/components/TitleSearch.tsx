@@ -17,48 +17,40 @@ class TitleSearch extends React.PureComponent<TitleSearchProps> {
 
     // This method is called when the component is first added to the document
     public componentDidMount() {
-    this.ensureDataFetched();
-  }
-
-  // This method is called when the route parameters change
-  public componentDidUpdate() {
-    this.ensureDataFetched();
+        this.props.requestTitleSearch('');
     }
 
   public render() {
     return (
       <React.Fragment>
         <h1 id="tabelLabel">Titles</h1>
-        <p>This component demonstrates fetching data from the server and working with URL parameters.</p>
+        <p>Enter text to begin filtering.</p>
             {this.renderTitlesTable()}
         {/*{this.renderPagination()}*/}
       </React.Fragment>
     );
   }
 
-  private ensureDataFetched() {
-      const searchText = this.props.match.params.searchText || '';
-    this.props.requestTitleSearch(searchText);
-  }
-
   private renderTitlesTable() {
       return (
           <div>
-              <input type="text"  onChange={(e) => this.props.requestTitleSearch(e.target.value)}/>
+              <input type="text"  onKeyUp={(e) => this.props.requestTitleSearch(e.target.value)}/>
               <table className='table table-striped' aria-labelledby="tabelLabel">
                   <thead>
                   <tr>
                       <th>Id</th>
-                      <th>Title</th>
+                          <th>Title</th>
+                          <th>Released</th>
                   </tr>
                   </thead>
                   <tbody>
                   {this.props.titles.map((title: TitleStore.Title) =>
-                          <tr key={title.titleId}>
-                              <td>{title.titleId}</td>
-                              <td>{title.titleName}</td>
-                          </tr>
-                      )}
+                      <tr key={title.titleId}>
+                          <td>{title.titleId}</td>
+                          <td>{title.titleName}</td>
+                          <td>{title.releaseYear}</td>
+                      </tr>
+                  )}
                   </tbody>
               </table>
           </div>

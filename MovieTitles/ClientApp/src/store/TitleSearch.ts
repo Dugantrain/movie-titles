@@ -13,6 +13,7 @@ export interface TitleState {
 export interface Title {
     titleId: number;
     titleName: string;
+    releaseYear: number;
 }
 
 // -----------------
@@ -42,7 +43,7 @@ export const actionCreators = {
     requestTitleSearch: (searchText: string): AppThunkAction<KnownAction> => (dispatch, getState) => {
         // Only load data if it's something we don't already have (and are not already loading)
         const appState = getState();
-        if (appState && appState.titles && searchText !== appState.titles.searchText) {
+        if (appState && appState.titles) {
             fetch(`title/search/` + searchText)
                 .then(response => response.json() as Promise<Title[]>)
                 .then(data => {
@@ -75,13 +76,11 @@ export const reducer: Reducer<TitleState> = (state: TitleState | undefined, inco
         case 'RECEIVE_TITLE_SEARCH':
             // Only accept the incoming data if it matches the most recent request. This ensures we correctly
             // handle out-of-order responses.
-            if (action.searchText === state.searchText) {
-                return {
-                    searchText: state.searchText,
-                    titles: action.titles,
-                    isLoading: false
-                };
-            }
+            return {
+                searchText: state.searchText,
+                titles: action.titles,
+                isLoading: false
+            };
             break;
     }
 
