@@ -1,8 +1,0 @@
-{
-  "runtimeOptions": {
-    "additionalProbingPaths": [
-      "C:\\Users\\mdugan\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\mdugan\\.nuget\\packages"
-    ]
-  }
-}
