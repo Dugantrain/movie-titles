@@ -15,7 +15,7 @@ namespace MovieTitles.Tests
     public class TitleRepositoryTests
     {
         [Theory, AutoMockData]
-        public void TitlesShouldBeSortedAlphaNumeric(List<Title> mockTitles)
+        public void TitlesShouldBeSortedAlphaNumericWhenSearchNotSupplied(List<Title> mockTitles)
         {
             mockTitles.Add(new Title
             {
@@ -28,6 +28,29 @@ namespace MovieTitles.Tests
             mockApplicationDbContextFixture.Setup(a => a.Title).Returns(mockTitleSet.Object);
             var sut = new TitleRepository(mockApplicationDbContextFixture.Object);
             var titles = sut.GetTitlesBySearchText(string.Empty);
+            Assert.True(titles.First().TitleName == "1");
+
+        }
+
+        [Theory, AutoMockData]
+        public void TitlesShouldBeSortedAlphaNumericWhenSearchSupplied(List<Title> mockTitles)
+        {
+            mockTitles.Add(new Title
+            {
+                TitleName = "1",
+                TitleNameSortable = "1"
+            });
+            mockTitles.Add(new Title
+            {
+                TitleName = "11",
+                TitleNameSortable = "11"
+            });
+            var mockTitleSet = mockTitles.AsDbSetMock();
+
+            var mockApplicationDbContextFixture = new Mock<IApplicationDbContext>();
+            mockApplicationDbContextFixture.Setup(a => a.Title).Returns(mockTitleSet.Object);
+            var sut = new TitleRepository(mockApplicationDbContextFixture.Object);
+            var titles = sut.GetTitlesBySearchText("1");
             Assert.True(titles.First().TitleName == "1");
 
         }
