@@ -4,7 +4,7 @@ import { AppThunkAction } from '.';
 // -----------------
 // STATE - This defines the type of data maintained in the Redux store.
 
-export interface TitleState {
+export interface TitleSearchState {
     isLoading: boolean;
     titles: Title[];
     searchText: string;
@@ -58,9 +58,9 @@ export const actionCreators = {
 // ----------------
 // REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 
-const unloadedState: TitleState = { titles: [], isLoading: false, searchText: '' };
+const unloadedState: TitleSearchState = { titles: [], isLoading: false, searchText: '' };
 
-export const reducer: Reducer<TitleState> = (state: TitleState | undefined, incomingAction: Action): TitleState => {
+export const reducer: Reducer<TitleSearchState> = (state: TitleSearchState | undefined, incomingAction: Action): TitleSearchState => {
     if (state === undefined) {
         return unloadedState;
     }

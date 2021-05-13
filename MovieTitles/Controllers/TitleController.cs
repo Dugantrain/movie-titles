@@ -29,7 +29,7 @@ namespace MovieTitles.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public Title GetById(int id)
+        public TitleDetail GetById(int id)
         {
             return _titleRepository.GetById(id);
         }

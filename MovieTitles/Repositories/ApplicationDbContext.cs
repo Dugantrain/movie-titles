@@ -9,6 +9,7 @@ namespace MovieTitles.Repositories
     public interface IApplicationDbContext
     {
         Microsoft.EntityFrameworkCore.DbSet<Title> Title { get; set; }
+        Microsoft.EntityFrameworkCore.DbSet<StoryLine> StoryLine { get; set; }
     }
     public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
@@ -18,5 +19,6 @@ namespace MovieTitles.Repositories
         }
 
         public Microsoft.EntityFrameworkCore.DbSet<Title> Title { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<StoryLine> StoryLine { get; set; }
     }
 }

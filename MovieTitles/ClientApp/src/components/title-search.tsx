@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { ApplicationState } from '../store';
-import * as TitleStore from '../store/title-search';
+import * as TitleSearchStore from '../store/title-search';
 
 // At runtime, Redux will merge together...
 type TitleSearchProps =
-  TitleStore.TitleState // ... state we've requested from the Redux store
-  & typeof TitleStore.actionCreators // ... plus action creators we've requested
+TitleSearchStore.TitleSearchState // ... state we've requested from the Redux store
+  & typeof TitleSearchStore.actionCreators // ... plus action creators we've requested
   & RouteComponentProps<{ searchText: string }>; // ... plus incoming routing parameters
 
 
@@ -23,9 +23,8 @@ class TitleSearch extends React.PureComponent<TitleSearchProps> {
   public render() {
     return (
       <React.Fragment>
-        <h1 id="tabelLabel">Titles</h1>
+        <h1>Titles</h1>
         {this.renderTitlesTable()}
-        {/*{this.renderPagination()}*/}
       </React.Fragment>
     );
   }
@@ -39,12 +38,12 @@ class TitleSearch extends React.PureComponent<TitleSearchProps> {
         {!this.props.isLoading &&
           <div className="row">
             {
-              this.props.titles.map((title: TitleStore.Title) =>
-                <div className="card col-md-4 mb-2">
+              this.props.titles.map((title: TitleSearchStore.Title) =>
+                <div className="card col-md-4 mb-2" key={title.titleId}>
                   <div className="card-body">
                     <h5 className="card-title">{title.titleName} ({title.releaseYear})</h5>
-                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" >Details</a>
+                    <p className="card-text">Brief description here.</p>
+                    <Link to={'/titles/' + title.titleId} >Details</Link>
                   </div>
                 </div>
               )}
@@ -64,5 +63,5 @@ class TitleSearch extends React.PureComponent<TitleSearchProps> {
 
 export default connect(
   (state: ApplicationState) => state.titles, // Selects which state properties are merged into the component's props
-  TitleStore.actionCreators // Selects which action creators are merged into the component's props
+  TitleSearchStore.actionCreators // Selects which action creators are merged into the component's props
 )(TitleSearch as any);
