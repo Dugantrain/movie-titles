@@ -8,4 +8,4 @@ The application uses Sql Server and a pre-defined sql script that will seed the 
 There are a few back-end unit tests that cover the repo layer as that was really the only area of backend cyclomatic complexity.
 
 # setup
-The sql connection string will need to be changed to run against an available db. And all necessary installations (.Net Core, Visual Studio, etc.) would need to be in place. Otherwise, the app should just work when hitting play in Visual Studio. 
+The sql connection string will need to be changed to run against an available db. And all necessary installations (.Net Core, Visual Studio, etc.) would need to be in place. Otherwise, the app should just work when hitting play in Visual Studio. It may be necessary to first run a build in Visual Studio in order to pull down all necessary dependencies before running.
